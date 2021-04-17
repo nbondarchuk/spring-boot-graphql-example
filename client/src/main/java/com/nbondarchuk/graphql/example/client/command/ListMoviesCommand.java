@@ -1,0 +1,50 @@
+package com.nbondarchuk.graphql.example.client.command;
+
+import com.apollographql.apollo.api.Response;
+import com.nbondarchuk.graphql.example.client.query.MoviesQuery;
+import com.nbondarchuk.graphql.example.client.reactivex.ObserverAdapter;
+import com.nbondarchuk.graphql.example.client.service.MovieService;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import picocli.CommandLine.Command;
+
+@Command(
+        name = "list",
+        description = "Lists all movies"
+)
+@Component
+public class ListMoviesCommand implements Runnable {
+
+    private MovieService movieService;
+
+    private MovieFragmentPrinter movieFragmentPrinter = new MovieFragmentPrinter();
+
+    @Autowired
+    public ListMoviesCommand(MovieService movieService) {
+        this.movieService = movieService;
+    }
+
+    @Override
+    public void run() {
+        movieService.getMovies().subscribe(new ObserverAdapter<>() {
+
+            @Override
+            public void onNext(@NotNull Response<MoviesQuery.Data> dataResponse) {
+                if (dataResponse.getData() == null
+                        || dataResponse.getData().movies() == null) {
+                    System.out.println("No movies found.");
+                    return;
+                }
+                dataResponse.getData().movies().forEach(movie -> {
+                    movieFragmentPrinter.printMovie(movie.fragments().movieFragment());
+                });
+            }
+
+            @Override
+            public void onError(@NotNull Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+    }
+}

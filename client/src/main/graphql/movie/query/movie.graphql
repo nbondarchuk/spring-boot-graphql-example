@@ -1,0 +1,7 @@
+query movie($id: ID!) {
+
+    movie(id: $id) {
+        id,
+        name
+    }
+}

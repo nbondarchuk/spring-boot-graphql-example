@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>spring-boot-graphql-example</artifactId>
+        <groupId>org.example</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>client</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.apollographql.apollo</groupId>
+            <artifactId>apollo-runtime</artifactId>
+            <version>2.5.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.apollographql.apollo</groupId>
+            <artifactId>apollo-rx2-support</artifactId>
+            <version>2.5.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>4.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.aoudiamoncef</groupId>
+                <artifactId>apollo-client-maven-plugin</artifactId>
+                <version>4.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <services>
+                                <movie-api>
+                                    <compilationUnit>
+                                        <name>movie</name>
+                                        <compilerParams>
+                                            <rootPackageName>com.nbondarchuk.graphql.example.client</rootPackageName>
+                                        </compilerParams>
+                                    </compilationUnit>
+                                    <introspection>
+                                        <enabled>true</enabled>
+                                        <endpointUrl>http://localhost:8080/graphql</endpointUrl>
+                                        <schemaFile>${project.basedir}/src/main/graphql/movie/schema.json
+                                        </schemaFile>
+                                    </introspection>
+                                </movie-api>
+                            </services>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

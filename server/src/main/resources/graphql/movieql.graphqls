@@ -1,0 +1,47 @@
+scalar Date
+
+enum Genre {
+    DRAMA,
+    SCI_FI,
+    ACTION,
+    FANTASY,
+    ADVENTURE
+}
+
+interface MovieI {
+    id: ID!,
+    name: String!,
+    releaseDate: Date,
+    genres: [MovieGenre]
+}
+
+type Movie implements MovieI{
+    id: ID!,
+    name: String!,
+    releaseDate: Date,
+    genres: [MovieGenre]
+}
+
+type MovieGenre {
+    id: ID!,
+    movie: Movie!,
+    genre: Genre!
+}
+
+input MovieSearchParams {
+    genre: Genre
+}
+
+type Query {
+
+    movies: [Movie]
+
+    movie(id: ID): Movie
+
+    searchMovies(searchParams: MovieSearchParams): [Movie]
+}
+
+type Mutation {
+
+    createMovie(name: String!, releaseDate: Date, genres: [Genre]): Movie
+}
