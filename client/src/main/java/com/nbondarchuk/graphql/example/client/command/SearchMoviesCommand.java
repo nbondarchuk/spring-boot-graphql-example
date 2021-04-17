@@ -22,6 +22,9 @@ public class SearchMoviesCommand implements Runnable {
     @Option(names = {"-g", "--genre"}, description = "movie genre")
     private Genre genre;
 
+    @Option(names = {"-n", "--name"}, description = "movie name")
+    private String name;
+
     private MovieService movieService;
 
     private MovieFragmentPrinter movieFragmentPrinter = new MovieFragmentPrinter();
@@ -34,6 +37,7 @@ public class SearchMoviesCommand implements Runnable {
     @Override
     public void run() {
         MovieSearchParams searchParams = MovieSearchParams.builder()
+                .name(name)
                 .genre(genre)
                 .build();
         movieService.searchMovies(searchParams).subscribe(new ObserverAdapter<>() {

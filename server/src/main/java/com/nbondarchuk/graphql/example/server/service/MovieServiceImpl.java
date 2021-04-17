@@ -38,7 +38,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> searchMovies(MovieSearchParams searchParams) {
-        return movieRepository.findByGenre(searchParams.getGenre());
+        return movieRepository.find(searchParams);
     }
 
     @Transactional

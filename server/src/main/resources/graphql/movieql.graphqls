@@ -8,14 +8,7 @@ enum Genre {
     ADVENTURE
 }
 
-interface MovieI {
-    id: ID!,
-    name: String!,
-    releaseDate: Date,
-    genres: [MovieGenre]
-}
-
-type Movie implements MovieI{
+type Movie {
     id: ID!,
     name: String!,
     releaseDate: Date,
@@ -29,6 +22,7 @@ type MovieGenre {
 }
 
 input MovieSearchParams {
+    name: String,
     genre: Genre
 }
 
