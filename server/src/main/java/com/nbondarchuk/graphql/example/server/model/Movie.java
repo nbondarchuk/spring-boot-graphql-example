@@ -21,6 +21,8 @@ public class Movie implements Serializable {
     @Column(nullable = false)
     private String name;
 
+    private String description;
+
     @Column(name = "release_date")
     private LocalDate releaseDate;
 

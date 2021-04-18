@@ -10,21 +10,18 @@ import static org.apache.commons.collections.CollectionUtils.isEmpty;
 
 public class MovieFragmentPrinter {
 
-    public void printMovie(MovieFragment movie) {
-        System.out.printf("---%n");
-        doPrintMovie(movie);
-        System.out.printf("---%n");
-    }
+    private static final String UNKNOWN = "Unknown";
 
-    private void doPrintMovie(MovieFragment movie) {
-        System.out.format("%s%n", movie.name());
-        System.out.format("Released\t%s%n", movie.releaseDate() != null ? movie.releaseDate() : "Unknown");
+    public void printMovie(MovieFragment movie) {
+        System.out.format("Id\t\t\t%s%n", movie.id());
+        System.out.format("Name\t\t%s%n", movie.name());
+        System.out.format("Released\t%s%n", movie.releaseDate() != null ? movie.releaseDate() : UNKNOWN);
         System.out.printf("Genre\t\t%s%n", genresToString(movie.movieGenres()));
     }
 
     private String genresToString(List<MovieFragment.MovieGenre> genres) {
         if (isEmpty(genres)) {
-            return "Unknown";
+            return UNKNOWN;
         }
         return genres.stream()
                 .map(MovieFragment.MovieGenre::genre)

@@ -22,8 +22,11 @@ public class SearchMoviesCommand implements Runnable {
     @Option(names = {"-g", "--genre"}, description = "movie genre")
     private Genre genre;
 
-    @Option(names = {"-n", "--name"}, description = "movie name")
+    @Option(names = {"-n", "--name"}, description = "movie name (case insensitive)")
     private String name;
+
+    @Option(names = {"-d", "--description"}, description = "movie description (case insensitive)")
+    private String description;
 
     private MovieService movieService;
 
@@ -39,6 +42,7 @@ public class SearchMoviesCommand implements Runnable {
         MovieSearchParams searchParams = MovieSearchParams.builder()
                 .name(name)
                 .genre(genre)
+                .description(description)
                 .build();
         movieService.searchMovies(searchParams).subscribe(new ObserverAdapter<>() {
 
@@ -50,7 +54,9 @@ public class SearchMoviesCommand implements Runnable {
                     return;
                 }
                 response.getData().searchMovies().forEach(movie -> {
+                    System.out.printf("---%n");
                     movieFragmentPrinter.printMovie(movie.fragments().movieFragment());
+                    System.out.printf("---%n");
                 });
             }
 

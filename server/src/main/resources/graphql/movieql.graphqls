@@ -11,6 +11,7 @@ enum Genre {
 type Movie {
     id: ID!,
     name: String!,
+    description: String,
     releaseDate: Date,
     genres: [MovieGenre]
 }
@@ -23,7 +24,8 @@ type MovieGenre {
 
 input MovieSearchParams {
     name: String,
-    genre: Genre
+    genre: Genre,
+    description: String
 }
 
 type Query {

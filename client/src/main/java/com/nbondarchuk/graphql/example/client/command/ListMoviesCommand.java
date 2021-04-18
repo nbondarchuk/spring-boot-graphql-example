@@ -30,14 +30,16 @@ public class ListMoviesCommand implements Runnable {
         movieService.getMovies().subscribe(new ObserverAdapter<>() {
 
             @Override
-            public void onNext(@NotNull Response<MoviesQuery.Data> dataResponse) {
-                if (dataResponse.getData() == null
-                        || dataResponse.getData().movies() == null) {
+            public void onNext(@NotNull Response<MoviesQuery.Data> response) {
+                if (response.getData() == null
+                        || response.getData().movies() == null) {
                     System.out.println("No movies found.");
                     return;
                 }
-                dataResponse.getData().movies().forEach(movie -> {
+                response.getData().movies().forEach(movie -> {
+                    System.out.printf("---%n");
                     movieFragmentPrinter.printMovie(movie.fragments().movieFragment());
+                    System.out.printf("---%n");
                 });
             }
 

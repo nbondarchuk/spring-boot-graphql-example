@@ -7,5 +7,7 @@ public class MovieSearchParams {
 
     private String name;
 
+    private String description;
+
     private Genre genre;
 }

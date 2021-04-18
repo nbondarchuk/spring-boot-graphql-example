@@ -1,7 +1,30 @@
+fragment MovieFragment on Movie {
+    id,
+    name,
+    releaseDate,
+    movieGenres: genres {
+        genre
+    }
+}
+
 query movie($id: ID!) {
 
     movie(id: $id) {
-        id,
-        name
+        ...MovieFragment,
+        description
+    }
+}
+
+query movies {
+
+    movies {
+        ...MovieFragment
+    }
+}
+
+query SearchMoviesQuery($searchParams: MovieSearchParams) {
+
+    searchMovies(searchParams: $searchParams) {
+        ...MovieFragment
     }
 }
