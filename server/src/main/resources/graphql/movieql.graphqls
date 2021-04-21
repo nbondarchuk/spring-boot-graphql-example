@@ -22,6 +22,14 @@ type MovieGenre {
     genre: Genre!
 }
 
+input MovieParams {
+
+    name: String!,
+    description: String,
+    releaseDate: Date,
+    genres: [Genre]
+}
+
 input MovieSearchParams {
     name: String,
     genre: Genre,
@@ -39,5 +47,5 @@ type Query {
 
 type Mutation {
 
-    createMovie(name: String!, releaseDate: Date, genres: [Genre]): Movie
+    createMovie(movieParams: MovieParams): Movie
 }

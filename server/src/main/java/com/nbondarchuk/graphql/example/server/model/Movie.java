@@ -26,6 +26,6 @@ public class Movie implements Serializable {
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
-    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieGenre> genres;
 }
